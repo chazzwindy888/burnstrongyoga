@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Date &amp; Time | BurnStrong Yoga</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .schedule-page {
+      min-height: 100vh;
+      padding: 48px 20px 64px;
+      background: #f8f7f2;
+      color: #292c28;
+    }
+    .schedule-container { max-width: 620px; width: 100%; margin: 0 auto; }
+    .schedule-back {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: inherit;
+      text-decoration: none;
+    }
+    .schedule-card {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.07);
+    }
+    .schedule-intro { margin-bottom: 28px; }
+    .schedule-intro h1 { margin: 0 0 10px; font-size: clamp(2rem,5vw,3rem); }
+    .schedule-intro p, .schedule-hint { line-height: 1.6; }
+    .booking-summary {
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      border-radius: 16px;
+      background: #f2f0e9;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .schedule-section { margin-top: 28px; }
+    .schedule-section h2 { margin-bottom: 14px; font-size: 1.25rem; }
+    .schedule-hint { font-size: .92rem; color: #62645e; }
+
+    .calendar {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #e4e3dc;
+      border-radius: 18px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .calendar-heading {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) 34px;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      margin: 0 0 12px;
+    }
+
+    .calendar-heading h3 {
+      margin: 0;
+      text-align: center;
+      font-size: 1.05rem;
+      line-height: 1.25;
+    }
+
+    .calendar-heading button {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border: 1px solid #d9d9d0;
+      background: #fff;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .calendar-heading button:disabled {
+      opacity: .35;
+      cursor: not-allowed;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 5px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .weekday {
+      min-width: 0;
+      text-align: center;
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 5px 0 8px;
+      color: #62645e;
+    }
+
+    .calendar-day {
+      box-sizing: border-box;
+      width: 100%;
+      height: 38px;
+      min-width: 0;
+      padding: 0;
+      border: 1px solid #e4e3dc;
+      border-radius: 8px;
+      background: #fff;
+      color: #292c28;
+      font: inherit;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease;
+    }
+
+    .calendar-day:hover:not(:disabled) {
+      border-color: #343d32;
+      background: #f2f0e9;
+    }
+
+    .calendar-day.selected {
+      background: #343d32;
+      color: #fff;
+      border-color: #343d32;
+    }
+
+    .calendar-day:disabled {
+      color: #c4c4bd;
+      background: #f7f6f2;
+      border-color: #efeee9;
+      cursor: not-allowed;
+    }
+
+    .calendar-day.today:not(.selected) {
+      border-color: #9b9e90;
+      font-weight: 700;
+    }
+
+    .calendar-day.empty {
+      visibility: hidden;
+      border-color: transparent;
+      background: transparent;
+    }
+
+    .selected-date-label {
+      margin: 18px 0 0;
+      font-weight: 600;
+    }
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 10px;
+    }
+    .time-option {
+      padding: 13px 8px;
+      border: 1px solid #c9c9c0;
+      border-radius: 999px;
+      background: white;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+    .time-option:hover, .time-option:focus-visible { border-color: #343d32; }
+    .time-option.selected {
+      background: #343d32;
+      border-color: #343d32;
+      color: white;
+    }
+    .schedule-message { margin-top: 14px; line-height: 1.6; }
+    .schedule-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .schedule-actions a { color: inherit; }
+    .schedule-continue {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 999px;
+      background: #343d32;
+      color: white;
+      font: inherit;
+      cursor: pointer;
+    }
+    .schedule-continue:disabled { opacity: .4; cursor: not-allowed; }
+
+    @media(max-width:520px) {
+      .schedule-page { padding: 28px 14px 40px; }
+      .schedule-card { padding: 16px 12px; }
+      .calendar { padding: 8px; border-radius: 14px; }
+      .calendar-heading { grid-template-columns: 30px minmax(0, 1fr) 30px; gap: 5px; margin-bottom: 8px; }
+      .calendar-heading h3 { font-size: .95rem; }
+      .calendar-heading button { width: 30px; height: 30px; }
+      .calendar-grid { gap: 3px; }
+      .calendar-day { height: 32px; font-size: .82rem; border-radius: 6px; }
+      .weekday { font-size: .65rem; padding: 4px 0 6px; }
+      .time-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+
+    /* Final calendar overrides: keep the entire month inside one border. */
+    .calendar {
+      border: 1px solid #e4e3dc !important;
+      border-radius: 18px !important;
+      overflow: hidden !important;
+      padding: 12px !important;
+      background: #fff !important;
+    }
+
+    .calendar-heading {
+      border: 0 !important;
+      border-radius: 0 !important;
+      margin: 0 0 12px !important;
+      padding: 0 !important;
+      background: transparent !important;
+    }
+
+    .calendar-grid {
+      border: 0 !important;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: transparent !important;
+      gap: 5px !important;
+    }
+
+    .calendar-day {
+      display: block !important;
+      width: 100% !important;
+      min-height: 0 !important;
+      height: 38px !important;
+      aspect-ratio: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 1px solid #e4e3dc !important;
+      border-radius: 8px !important;
+      background: #fff !important;
+      font-size: .9rem !important;
+    }
+
+    .calendar-day:disabled {
+      background: #f7f6f2 !important;
+      color: #c4c4bd !important;
+      border-color: #efeee9 !important;
+    }
+
+    .calendar-day.selected,
+    .calendar-day.selected:hover {
+      background: #343d32 !important;
+      color: #fff !important;
+      border-color: #343d32 !important;
+    }
+
+    .calendar-day.empty {
+      visibility: hidden !important;
+      border-color: transparent !important;
+      background: transparent !important;
+    }
+
+    @media (max-width: 520px) {
+      .calendar { padding: 8px !important; }
+      .calendar-grid { gap: 3px !important; }
+      .calendar-day {
+        height: 32px !important;
+        font-size: .82rem !important;
+        border-radius: 6px !important;
+      }
+    }
+
+  
+/* Keep appointment times hidden until their time-of-day option is clicked. */
+#timeGrid .time-period-options[hidden] {
+  display: none !important;
+}
+
+
+/* Stack time-of-day choices vertically. */
+#timeGrid .time-period {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+#timeGrid .time-period-button {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#timeGrid .time-period-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+#timeGrid .time-period-options[hidden] {
+  display: none !important;
+}
+
+
+/* FORCE time-of-day choices into one vertical column */
+#timeGrid {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  width: 100% !important;
+}
+
+#timeGrid > .time-period {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 0 12px 0 !important;
+}
+
+#timeGrid > .time-period > .time-period-button {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+}
+
+#timeGrid .time-period-options[hidden] {
+  display: none !important;
+}
+
+</style>
+</head>
+<body>
+  <main class="schedule-page">
+    <div class="schedule-container">
+      <a class="schedule-back" href="booking.html">← Back to your choices</a>
+
+      <section class="schedule-card">
+        <header class="schedule-intro">
+          <h1>Choose Your Date &amp; Time</h1>
+          <p>Select a date on the calendar, then choose an available start time.</p>
+        </header>
+
+        <div class="booking-summary" id="bookingSummary" aria-live="polite">
+          Loading your session details…
+        </div>
+
+        <form id="scheduleForm">
+          <section class="schedule-section">
+            <h2>1. Your Contact Information</h2>
+            <label for="customerName">Your name</label>
+            <input id="customerName" name="customerName" type="text"
+              autocomplete="name" required
+              style="display:block;width:100%;box-sizing:border-box;margin-top:8px;margin-bottom:16px;padding:12px;border:1px solid #ccc;border-radius:12px;font:inherit;">
+
+            <label for="customerEmail">Your email address</label>
+            <input id="customerEmail" name="customerEmail" type="email"
+              autocomplete="email" required
+              style="display:block;width:100%;box-sizing:border-box;margin-top:8px;padding:12px;border:1px solid #ccc;border-radius:12px;font:inherit;">
+          </section>
+
+          <section class="schedule-section">
+            <h2>2. Additional Information (Optional)</h2>
+            <label for="additionalInfo">
+              Tell me a little about what you're looking for in your yoga session.
+              Do you have particular goals, areas you'd like to focus on, injuries
+              or mobility limitations, accessibility needs, or special requests?
+              Share anything you'd like me to know so I can tailor the session to you.
+            </label>
+            <textarea id="additionalInfo" name="additionalInfo" rows="5"
+              maxlength="2000"
+              placeholder="Share any additional details here..."
+              style="display:block;width:100%;box-sizing:border-box;margin-top:12px;padding:12px;border:1px solid #ccc;border-radius:12px;font:inherit;resize:vertical;"></textarea>
+            <p class="schedule-hint">
+              This field is optional. Share only what you're comfortable sharing.
+            </p>
+          </section>
+          <section class="schedule-section">
+            <h2>1. Choose a date</h2>
+
+            <div class="calendar">
+              <div class="calendar-heading">
+                <button type="button" id="previousMonth" aria-label="Previous month">‹</button>
+                <h3 id="calendarMonth">Month Year</h3>
+                <button type="button" id="nextMonth" aria-label="Next month">›</button>
+              </div>
+              <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+
+            <p class="selected-date-label" id="selectedDateLabel">
+              Select a date to see available times.
+            </p>
+            <p class="schedule-hint">
+              Appointments must be booked at least 24 hours in advance.
+              All times are Puerto Rico local time.
+            </p>
+          </section>
+
+          <section class="schedule-section">
+            <h2>2. Choose a start time</h2>
+            <div class="time-grid" id="timeGrid">
+              <p class="schedule-hint">Choose a date on the calendar first.</p>
+            </div>
+            <p class="schedule-message" id="scheduleMessage" role="status"></p>
+          </section>
+
+          <div class="schedule-actions">
+            <a href="booking.html">Back</a>
+            <button class="schedule-continue" type="submit" id="continueButton" disabled>
+              Continue
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const bookingRaw = sessionStorage.getItem("burnstrongBooking");
+    const summary = document.getElementById("bookingSummary");
+    const calendarGrid = document.getElementById("calendarGrid");
+    const calendarMonth = document.getElementById("calendarMonth");
+    const previousMonth = document.getElementById("previousMonth");
+    const nextMonth = document.getElementById("nextMonth");
+    const selectedDateLabel = document.getElementById("selectedDateLabel");
+    const timeGrid = document.getElementById("timeGrid");
+    const message = document.getElementById("scheduleMessage");
+    const continueButton = document.getElementById("continueButton");
+    const scheduleForm = document.getElementById("scheduleForm");
+    const timeZone = "America/Puerto_Rico";
+
+    let booking = null;
+    let selectedDate = "";
+    let selectedTime = "";
+
+    function prParts(date = new Date()) {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone, year: "numeric", month: "2-digit", day: "2-digit"
+      }).formatToParts(date);
+      const result = {};
+      parts.forEach(p => {
+        if (p.type !== "literal") result[p.type] = p.value;
+      });
+      return { year: +result.year, month: +result.month, day: +result.day };
+    }
+
+    function dateString(p) {
+      return `${p.year}-${String(p.month).padStart(2,"0")}-${String(p.day).padStart(2,"0")}`;
+    }
+
+    function parseDate(value) {
+      const [year, month, day] = value.split("-").map(Number);
+      return { year, month, day };
+    }
+
+    function timestampFor(dateValue, timeValue) {
+      const { year, month, day } = parseDate(dateValue);
+      const [hours, minutes] = timeValue.split(":").map(Number);
+      // Puerto Rico uses UTC-4.
+      return Date.UTC(year, month - 1, day, hours + 4, minutes);
+    }
+
+    function locationDescription(data) {
+      if (data.locationType === "beach") {
+        return "At the beach — " + (data.beach || "Beach not selected");
+      }
+      if (data.locationType === "residence") {
+        return "At your hotel or residence — " +
+          (data.address || "Address not provided");
+      }
+      return "Location not selected";
+    }
+
+    function formatTime(hour, minute) {
+      const period = hour >= 12 ? "PM" : "AM";
+      return `${hour % 12 || 12}:${String(minute).padStart(2,"0")} ${period}`;
+    }
+
+    function formatDate(value) {
+      const { year, month, day } = parseDate(value);
+      return new Intl.DateTimeFormat("en-US", {
+        timeZone, weekday: "long", month: "long", day: "numeric", year: "numeric"
+      }).format(new Date(Date.UTC(year, month - 1, day, 12)));
+    }
+
+    function renderCalendar(year, month) {
+      calendarGrid.replaceChildren();
+
+      const monthDate = new Date(Date.UTC(year, month - 1, 1));
+      calendarMonth.textContent = new Intl.DateTimeFormat("en-US", {
+        timeZone, month: "long", year: "numeric"
+      }).format(monthDate);
+
+      ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(day => {
+        const label = document.createElement("div");
+        label.className = "weekday";
+        label.textContent = day;
+        calendarGrid.appendChild(label);
+      });
+
+      const firstWeekday = monthDate.getUTCDay();
+      const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+      const today = prParts();
+      const todayString = dateString(today);
+      const tomorrowDate = new Date(Date.UTC(
+        today.year, today.month - 1, today.day + 1
+      ));
+      const minimumDateString = dateString({
+        year: tomorrowDate.getUTCFullYear(),
+        month: tomorrowDate.getUTCMonth() + 1,
+        day: tomorrowDate.getUTCDate()
+      });
+
+      for (let i = 0; i < firstWeekday; i++) {
+        const blank = document.createElement("div");
+        blank.className = "calendar-day empty";
+        calendarGrid.appendChild(blank);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const value = dateString({ year, month, day });
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "calendar-day";
+        button.textContent = day;
+        button.setAttribute("aria-label", formatDate(value));
+
+        if (value === todayString) button.classList.add("today");
+        if (value === selectedDate) {
+          button.classList.add("selected");
+          button.setAttribute("aria-pressed", "true");
+        } else {
+          button.setAttribute("aria-pressed", "false");
+        }
+
+        // Require at least one day of advance notice; Sundays are unavailable.
+        const dayOfWeek = new Date(Date.UTC(year, month - 1, day)).getUTCDay();
+        if (value < minimumDateString || dayOfWeek === 0) {
+          button.disabled = true;
+          button.setAttribute(
+            "aria-label",
+            formatDate(value) + (dayOfWeek === 0 ? " — unavailable on Sundays" : " — too soon to book")
+          );
+        }
+
+        button.addEventListener("click", () => {
+          selectedDate = value;
+          selectedTime = "";
+          selectedDateLabel.textContent = formatDate(value);
+          message.textContent = "";
+          continueButton.disabled = true;
+          renderCalendar(year, month);
+          renderTimes();
+        });
+
+        calendarGrid.appendChild(button);
+      }
+
+      const current = prParts();
+      const monthIndex = year * 12 + month - 1;
+      const currentIndex = current.year * 12 + current.month - 1;
+      previousMonth.disabled = monthIndex <= currentIndex;
+      nextMonth.disabled = false;
+    }
+
+    function renderTimes() {
+      selectedTime = "";
+      continueButton.disabled = true;
+      timeGrid.replaceChildren();
+      message.textContent = "";
+
+      if (!booking || !selectedDate) {
+        timeGrid.textContent = "Choose a date on the calendar first.";
+        return;
+      }
+
+      const { year, month, day } = parseDate(selectedDate);
+      const weekday = new Date(Date.UTC(year, month - 1, day)).getUTCDay();
+
+      if (weekday === 0) {
+        timeGrid.textContent = "Sundays are unavailable. Please choose another date.";
+        return;
+      }
+
+      const duration = Number(booking.durationMinutes);
+      const earliest = Date.now() + 24 * 60 * 60 * 1000;
+      const periods = [
+        { title: "Morning", start: 6 * 60, end: 11 * 60 },
+        { title: "Midday", start: 12 * 60, end: 14 * 60 },
+        { title: "Afternoon/Evening", start: 15 * 60, end: 20 * 60 + 30 }
+      ];
+
+      let totalCount = 0;
+
+      periods.forEach(period => {
+        const section = document.createElement("section");
+        section.className = "time-period";
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "time-period-button";
+        toggle.textContent = period.title;
+        toggle.setAttribute("aria-expanded", "false");
+
+        const options = document.createElement("div");
+        options.className = "time-period-options";
+        options.hidden = true;
+
+        let periodCount = 0;
+
+        for (let minutes = period.start; minutes <= period.end; minutes += 15) {
+          if (minutes % 60 === 45) continue;
+          if (minutes + duration > 20 * 60 + 30) continue;
+
+          const hour = Math.floor(minutes / 60);
+          const minute = minutes % 60;
+          const value = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+
+          if (timestampFor(selectedDate, value) < earliest) continue;
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "time-option";
+          button.textContent = formatTime(hour, minute);
+          button.setAttribute("aria-pressed", "false");
+
+          button.addEventListener("click", () => {
+            timeGrid.querySelectorAll(".time-option").forEach(option => {
+              option.classList.remove("selected");
+              option.setAttribute("aria-pressed", "false");
+            });
+
+            button.classList.add("selected");
+            button.setAttribute("aria-pressed", "true");
+            selectedTime = value;
+            continueButton.disabled = false;
+            message.textContent =
+              `Selected ${formatDate(selectedDate)} at ${formatTime(hour, minute)} for a ${duration}-minute session.`;
+          });
+
+          options.appendChild(button);
+          periodCount++;
+          totalCount++;
+        }
+
+        if (periodCount === 0) {
+          toggle.disabled = true;
+          toggle.textContent = period.title + " — no available times";
+        } else {
+          toggle.addEventListener("click", () => {
+            const wasExpanded = toggle.getAttribute("aria-expanded") === "true";
+
+            timeGrid.querySelectorAll(".time-period-button").forEach(otherToggle => {
+              otherToggle.setAttribute("aria-expanded", "false");
+              const otherOptions = otherToggle.parentElement.querySelector(".time-period-options");
+              if (otherOptions) otherOptions.hidden = true;
+            });
+
+            if (!wasExpanded) {
+              toggle.setAttribute("aria-expanded", "true");
+              options.hidden = false;
+            }
+          });
+        }
+
+        section.appendChild(toggle);
+        section.appendChild(options);
+        timeGrid.appendChild(section);
+      });
+
+      if (totalCount === 0) {
+        timeGrid.textContent =
+          "No times meet the booking rules on this date. Please choose another date.";
+      }
+    }
+
+    previousMonth.addEventListener("click", () => {
+      const parts = prParts();
+      const current = new Date(Date.UTC(parts.year, parts.month - 1, 1));
+      current.setUTCMonth(current.getUTCMonth() - 1);
+      renderCalendar(current.getUTCFullYear(), current.getUTCMonth() + 1);
+    });
+
+    nextMonth.addEventListener("click", () => {
+      const base = selectedDate ? parseDate(selectedDate) : prParts();
+      const current = new Date(Date.UTC(base.year, base.month - 1, 1));
+      current.setUTCMonth(current.getUTCMonth() + 1);
+      renderCalendar(current.getUTCFullYear(), current.getUTCMonth() + 1);
+    });
+
+    if (!bookingRaw) {
+      summary.textContent =
+        "Your session choices were not found. Please return to the previous page and select your location and session length.";
+      timeGrid.textContent = "Session details are needed before choosing a time.";
+      previousMonth.disabled = true;
+      nextMonth.disabled = true;
+    } else {
+      try {
+        booking = JSON.parse(bookingRaw);
+        if (![60,75,90].includes(Number(booking.durationMinutes))) {
+          throw new Error("Invalid session length");
+        }
+
+        summary.textContent =
+          `${locationDescription(booking)} | ${booking.durationMinutes}-minute session`;
+
+        const today = prParts();
+        renderCalendar(today.year, today.month);
+      } catch (error) {
+        booking = null;
+        summary.textContent =
+          "Your session details could not be read. Please return to the previous page and try again.";
+        previousMonth.disabled = true;
+        nextMonth.disabled = true;
+      }
+    }
+
+    scheduleForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!booking || !selectedDate || !selectedTime) return;
+
+      if (timestampFor(selectedDate, selectedTime) < Date.now() + 24 * 60 * 60 * 1000) {
+        message.textContent =
+          "That time is now within 24 hours. Please choose another time.";
+        renderTimes();
+        return;
+      }
+
+      const [hour, minute] = selectedTime.split(":").map(Number);
+      booking.appointmentDate = selectedDate;
+      booking.startTime = selectedTime;
+      booking.startTimeDisplay = formatTime(hour, minute);
+      booking.appointmentDateDisplay = formatDate(selectedDate);
+      booking.timeZone = timeZone;
+      booking.customerName = document.getElementById("customerName").value.trim();
+      booking.customerEmail = document.getElementById("customerEmail").value.trim();
+      booking.additionalInfo = document.getElementById("additionalInfo").value.trim();
+
+      sessionStorage.setItem("burnstrongBooking", JSON.stringify(booking));
+
+      message.textContent =
+        "Your booking request details are saved. Your appointment is not confirmed until Charlie reviews and approves your request.";
+      continueButton.disabled = true;
+    });
+  </script>
+</body>
+</html>

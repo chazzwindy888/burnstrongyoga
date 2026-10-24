@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Private yoga, Pilates, mindful movement and wellness in San Juan, Puerto Rico. Personalized sessions at your location or online.">
+
+  <title>BurnStrong Yoga | Private Wellness in Puerto Rico</title>
+
+  <style>
+    :root {
+      --ivory: #f5f2e9;
+      --olive: #78816a;
+      --deep-olive: #30382d;
+      --charcoal: #20231f;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--charcoal);
+      background: var(--ivory);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      padding: 20px 7%;
+      background: var(--ivory);
+    }
+
+    .logo {
+      display: block;
+      width: 175px;
+      height: auto;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+
+    nav a {
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: var(--olive);
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 23px;
+      border: 1px solid var(--ivory);
+      border-radius: 24px;
+      background: var(--ivory);
+      color: var(--deep-olive);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.25s ease;
+    }
+
+    .button:hover {
+      background: #dedfd2;
+    }
+
+    .hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: 620px;
+      padding: 90px 10%;
+      overflow: hidden;
+      color: var(--white);
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(20, 26, 21, 0.66) 0%,
+          rgba(20, 26, 21, 0.30) 58%,
+          rgba(20, 26, 21, 0.12) 100%
+        ),
+        linear-gradient(
+          0deg,
+          rgba(20, 26, 21, 0.38),
+          rgba(20, 26, 21, 0.08)
+        ),
+        url("images/palm-hero.png") center 48% / cover no-repeat;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 700px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .hero .eyebrow {
+      color: #d8ddce;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: normal;
+      line-height: 1.2;
+    }
+
+    h1 {
+      max-width: 700px;
+      margin: 24px 0;
+      font-size: clamp(46px, 7vw, 82px);
+      letter-spacing: -2px;
+    }
+
+    .hero p {
+      max-width: 490px;
+      margin-bottom: 32px;
+      color: #f1f0e9;
+      font-size: 17px;
+    }
+
+    .hero-note {
+      margin-top: 22px;
+      color: #e0e2d8;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section {
+      padding: 100px 9%;
+    }
+
+    .section-heading {
+      max-width: 700px;
+      margin: 0 auto 55px;
+      text-align: center;
+    }
+
+    .section-heading .eyebrow {
+      color: var(--olive);
+    }
+
+    h2 {
+      margin: 17px 0;
+      font-size: clamp(34px, 4.5vw, 52px);
+    }
+
+    .section-heading > p {
+      max-width: 570px;
+      margin: 0 auto;
+    }
+
+    .services {
+      background: var(--ivory);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 36px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      padding-top: 20px;
+      border-top: 1px solid #b8bcaa;
+    }
+
+    .service-card h3 {
+      margin: 12px 0;
+      font-size: 27px;
+    }
+
+    .service-card p {
+      color: #595d54;
+      font-size: 14px;
+    }
+
+    .service-number {
+      color: var(--olive);
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    .about {
+      background: #e8e6db;
+    }
+
+    .about-content {
+      max-width: 790px;
+      margin: 0 auto;
+    }
+
+    .about .eyebrow {
+      color: var(--olive);
+    }
+
+    .about p {
+      max-width: 680px;
+    }
+
+    .locations {
+      background: var(--ivory);
+      text-align: center;
+    }
+
+    .locations-content {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .booking {
+      background: var(--deep-olive);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .booking-content {
+      max-width: 690px;
+      margin: 0 auto;
+    }
+
+    .booking .eyebrow {
+      color: #d7ddcb;
+    }
+
+    .booking p {
+      margin: 25px auto;
+      color: #e6e8df;
+    }
+
+    .booking-note {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    .contact {
+      text-align: center;
+    }
+
+    .contact .eyebrow {
+      color: var(--olive);
+    }
+
+    footer {
+      padding: 28px 7%;
+      background: var(--charcoal);
+      color: var(--ivory);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .header {
+        flex-direction: column;
+        padding: 22px 6%;
+      }
+
+      .logo {
+        width: 155px;
+      }
+
+      nav {
+        justify-content: center;
+        gap: 17px;
+      }
+
+      .hero {
+        min-height: 560px;
+        padding: 75px 7%;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .section {
+        padding: 70px 7%;
+      }
+
+      .service-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <a href="#home" aria-label="BurnStrong Yoga homepage">
+      <img
+        class="logo"
+        src="images/burnstrong-logo.png"
+        alt="BurnStrong Yoga"
+      >
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#locations">Locations</a>
+      <a href="#contact">Contact</a>
+      <a href="booking.html">Request a Session</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero" id="home">
+      <div class="hero-content">
+
+        <div class="eyebrow">
+          Private wellness · Puerto Rico · Online
+        </div>
+
+        <h1>Find your own rhythm.</h1>
+
+        <p>
+          Personalized yoga, mindful movement, and wellness experiences
+          designed around you, your needs, and the way you want to feel.
+        </p>
+
+        <a class="button" href="booking.html">
+          Request a Session
+        </a>
+
+        <div class="hero-note">
+          A more personal approach to movement
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section services" id="services">
+
+      <div class="section-heading">
+        <div class="eyebrow">Move · Breathe · Restore</div>
+        <h2>Wellness, shaped around you.</h2>
+        <p>
+          Thoughtful, personalized sessions for individuals, small groups,
+          and businesses.
+        </p>
+      </div>
+
+      <div class="service-grid">
+
+        <article class="service-card">
+          <div class="service-number">01 / PRIVATE PRACTICE</div>
+          <h3>Private Yoga</h3>
+          <p>
+            Individual yoga sessions tailored to your experience,
+            preferences, and personal goals.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-number">02 / STRENGTH & MOBILITY</div>
+          <h3>Pilates & Personal Training</h3>
+          <p>
+            Individualized movement sessions focused on strength,
+            mobility, and body awareness.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-number">03 / REST & RESET</div>
+          <h3>Meditation & Relaxation</h3>
+          <p>
+            A quieter space for breathing, meditation, and restorative
+            wellness practices.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-number">04 / TOGETHER</div>
+          <h3>Small Groups</h3>
+          <p>
+            Private movement experiences for friends, families,
+            and small gatherings.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-number">05 / WORKPLACE</div>
+          <h3>Corporate Wellness</h3>
+          <p>
+            Customized wellness sessions for businesses, teams,
+            and hospitality partners.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-number">06 / WHEREVER YOU ARE</div>
+          <h3>Online Sessions</h3>
+          <p>
+            Personal instruction and mindful movement from wherever
+            you are in the world.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="about-content">
+        <div class="eyebrow">The BurnStrong approach</div>
+        <h2>Movement that meets you where you are.</h2>
+        <p>
+          Your body, your experience, and your goals are unique.
+          Personalized sessions create room to move thoughtfully,
+          develop strength, and build a practice that works for you.
+        </p>
+        <p>
+          A fuller introduction to the teacher, professional experience,
+          teaching philosophy, and client testimonials will be added
+          as we develop the site.
+        </p>
+      </div>
+    </section>
+
+    <section class="section locations" id="locations">
+      <div class="locations-content">
+        <div class="eyebrow">Puerto Rico & online</div>
+        <h2>Your space. Your practice.</h2>
+        <p>
+          Request an in-person session at a suitable beach, hotel,
+          vacation rental, or private residence in the San Juan
+          metropolitan area. Online sessions are available worldwide.
+          All in-person locations are subject to confirmation.
+        </p>
+      </div>
+    </section>
+
+    <section class="section booking" id="booking">
+      <div class="booking-content">
+        <div class="eyebrow">Begin with a request</div>
+        <h2>Let's find a time that works for you.</h2>
+        <p>
+          Tell us what kind of session you're looking for, where you'd
+          like to meet, and your preferred date and time. Every request
+          will be reviewed before an appointment is confirmed.
+        </p>
+        <a class="button" href="#contact">
+          Ask About a Session
+        </a>
+        <p class="booking-note">
+          Booking requests are not confirmed appointments.
+        </p>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="eyebrow">Get in touch</div>
+      <h2>Have a question?</h2>
+      <p>
+        Contact information and the booking request form will be added
+        in the next development stage.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    BurnStrong Yoga · Private wellness in Puerto Rico and online
+  </footer>
+
+</body>
+</html>
