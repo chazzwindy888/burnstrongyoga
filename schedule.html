@@ -354,16 +354,29 @@
           Loading your session details…
         </div>
 
-        <form id="scheduleForm">
+        <form id="scheduleForm"
+          action="https://formsubmit.co/charlie@burnstrong.nyc"
+          method="POST">
+      <input type="hidden" name="_cc" value="charliewind@gmail.com">
+      <input type="hidden" name="_subject" value="New BurnStrong Yoga Booking Request — Pending Approval">
+      <input type="hidden" name="_autoresponse" value="Thank you for your yoga booking request. Your appointment is not confirmed yet. Charlie will review your request and contact you by email.">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="Session location" id="emailLocation">
+      <input type="hidden" name="Session type" id="emailSessionType">
+      <input type="hidden" name="Guest count" id="emailGuestCount">
+      <input type="hidden" name="Session duration" id="emailDuration">
+      <input type="hidden" name="Requested date" id="emailDate">
+      <input type="hidden" name="Requested time" id="emailTime">
+      <input type="hidden" name="Time zone" id="emailTimeZone">
           <section class="schedule-section">
             <h2>1. Your Contact Information</h2>
             <label for="customerName">Your name</label>
-            <input id="customerName" name="customerName" type="text"
+            <input id="customerName" name="name" type="text"
               autocomplete="name" required
               style="display:block;width:100%;box-sizing:border-box;margin-top:8px;margin-bottom:16px;padding:12px;border:1px solid #ccc;border-radius:12px;font:inherit;">
 
             <label for="customerEmail">Your email address</label>
-            <input id="customerEmail" name="customerEmail" type="email"
+            <input id="customerEmail" name="email" type="email"
               autocomplete="email" required
               style="display:block;width:100%;box-sizing:border-box;margin-top:8px;padding:12px;border:1px solid #ccc;border-radius:12px;font:inherit;">
           </section>
@@ -376,7 +389,7 @@
               or mobility limitations, accessibility needs, or special requests?
               Share anything you'd like me to know so I can tailor the session to you.
             </label>
-            <textarea id="additionalInfo" name="additionalInfo" rows="5"
+            <textarea id="additionalInfo" name="message" rows="5"
               maxlength="2000"
               placeholder="Share any additional details here..."
               style="display:block;width:100%;box-sizing:border-box;margin-top:12px;padding:12px;border:1px solid #ccc;border-radius:12px;font:inherit;resize:vertical;"></textarea>
@@ -745,11 +758,21 @@
       booking.customerEmail = document.getElementById("customerEmail").value.trim();
       booking.additionalInfo = document.getElementById("additionalInfo").value.trim();
 
+      document.getElementById("emailLocation").value = locationDescription(booking);
+      document.getElementById("emailSessionType").value = booking.sessionTypeLabel || booking.sessionType || "";
+      document.getElementById("emailGuestCount").value = String(booking.guestCount || "");
+      document.getElementById("emailDuration").value = booking.durationMinutes + " minutes";
+      document.getElementById("emailDate").value = booking.appointmentDateDisplay;
+      document.getElementById("emailTime").value = booking.startTimeDisplay;
+      document.getElementById("emailTimeZone").value = booking.timeZone;
+
       sessionStorage.setItem("burnstrongBooking", JSON.stringify(booking));
 
       message.textContent =
-        "Your booking request details are saved. Your appointment is not confirmed until Charlie reviews and approves your request.";
+        "Sending your booking request…";
       continueButton.disabled = true;
+
+      HTMLFormElement.prototype.submit.call(scheduleForm);
     });
   </script>
 </body>
