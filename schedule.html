@@ -365,6 +365,7 @@
       <input type="hidden" name="Session type" id="emailSessionType">
       <input type="hidden" name="Guest count" id="emailGuestCount">
       <input type="hidden" name="Session duration" id="emailDuration">
+      <input type="hidden" name="Session price" id="emailPrice">
       <input type="hidden" name="Requested date" id="emailDate">
       <input type="hidden" name="Requested time" id="emailTime">
       <input type="hidden" name="Time zone" id="emailTimeZone">
@@ -480,6 +481,26 @@
       const [hours, minutes] = timeValue.split(":").map(Number);
       // Puerto Rico uses UTC-4.
       return Date.UTC(year, month - 1, day, hours + 4, minutes);
+    }
+
+    const sessionPrices = {
+      60: { 1: 100, 2: 120, 3: 150, 4: 175, 5: 175, 6: 175, 7: 175 },
+      75: { 1: 115, 2: 135, 3: 170, 4: 200, 5: 200, 6: 200, 7: 200 },
+      90: { 1: 130, 2: 155, 3: 195, 4: 230, 5: 230, 6: 230, 7: 230 }
+    };
+
+    function sessionPrice(data) {
+      const duration = Number(data.durationMinutes);
+      const guests = Number(data.guestCount);
+      return sessionPrices[duration]?.[guests] ?? null;
+    }
+
+    function formatPrice(data) {
+      const price = sessionPrice(data);
+      return price === null ? "Price unavailable" :
+        new Intl.NumberFormat("en-US", {
+          style: "currency", currency: "USD", maximumFractionDigits: 0
+        }).format(price);
     }
 
     function locationDescription(data) {
@@ -723,8 +744,15 @@
           throw new Error("Invalid session length");
         }
 
+        const price = sessionPrice(booking);
+        if (price === null) {
+          throw new Error("Invalid guest count or price");
+        }
+
         summary.textContent =
-          `${locationDescription(booking)} | ${booking.durationMinutes}-minute session`;
+          `${locationDescription(booking)} | ${booking.durationMinutes}-minute session | ` +
+          `${booking.guestCount} ${Number(booking.guestCount) === 1 ? "person" : "people"} | ` +
+          `Price: ${formatPrice(booking)}`;
 
         const today = prParts();
         renderCalendar(today.year, today.month);
@@ -762,6 +790,7 @@
       document.getElementById("emailSessionType").value = booking.sessionTypeLabel || booking.sessionType || "";
       document.getElementById("emailGuestCount").value = String(booking.guestCount || "");
       document.getElementById("emailDuration").value = booking.durationMinutes + " minutes";
+      document.getElementById("emailPrice").value = formatPrice(booking);
       document.getElementById("emailDate").value = booking.appointmentDateDisplay;
       document.getElementById("emailTime").value = booking.startTimeDisplay;
       document.getElementById("emailTimeZone").value = booking.timeZone;
