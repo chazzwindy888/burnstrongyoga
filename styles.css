@@ -522,7 +522,7 @@ button,
 
 .about-photo {
   width: 100%;
-  max-width: 320px;
+  max-width: 180px;
   margin: 0 auto;
 }
 
@@ -530,7 +530,7 @@ button,
   display: block;
   width: 100%;
   height: auto;
-  max-height: 440px;
+  max-height: 240px;
   object-fit: cover;
   object-position: center;
   border-radius: 6px;
@@ -555,11 +555,11 @@ button,
   }
 
   .about-photo {
-    max-width: 280px;
+    max-width: 150px;
     margin: 0 auto;
   }
 
   .about-photo img {
-    max-height: 360px;
+    max-height: 200px;
   }
 }
