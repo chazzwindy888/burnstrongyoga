@@ -509,3 +509,51 @@ button,
 .time-option-button {
   border-radius: 999px;
 }
+
+/* About section: Charlie's portrait and biography */
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
+  gap: 3rem;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.about-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 650px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 6px;
+}
+
+.about-content {
+  min-width: 0;
+}
+
+.about-content h2 {
+  margin-top: 0.4rem;
+}
+
+.about-invitation {
+  margin-top: 1.75rem;
+}
+
+@media (max-width: 700px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .about-photo {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .about-photo img {
+    max-height: 520px;
+  }
+}
