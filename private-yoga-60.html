@@ -2,188 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>60-Minute Private Yoga | BurnStrong Yoga</title>
   <link rel="stylesheet" href="styles.css">
-
-  <script
-    
-src="https://www.paypal.com/sdk/js?client-id=BAAQ4sc6DQMMuw8H0Zql_lULDuNxmOuVxg4ReEukklJC1MvFa5WyKWXDVEIcGILOVbgCWvS4hBMEIkKtr0&components=hosted-buttons&enable-funding=venmo&currency=USD">
-  </script>
-
+  <script src="https://www.paypal.com/sdk/js?client-id=BAAQ4sc6DQMMuw8H0Zql_lULDuNxmOuVxg4ReEukklJC1MvFa5WyKWXDVEIcGILOVbgCWvS4hBMEIkKtr0&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
   <style>
-    body {
-      margin: 0;
-      background: #f5f2e9;
-      color: #303923;
-      font-family: inherit;
-    }
-
-    .payment-page {
-      min-height: 100vh;
-      padding: 60px 20px;
-      box-sizing: border-box;
-    }
-
-    .payment-container {
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .payment-intro {
-      margin-bottom: 36px;
-      text-align: center;
-    }
-
-    .eyebrow {
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-    }
-
-    .payment-intro h1 {
-      margin: 16px 0;
-      font-size: clamp(2rem, 5vw, 3rem);
-    }
-
-    .payment-intro p {
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
-
-    .payment-card {
-      margin-bottom: 22px;
-      padding: 28px;
-      border: 1px solid #d7d7ca;
-      border-radius: 18px;
-      background: #fffdf8;
-    }
-
-    .payment-card h2 {
-      margin-top: 0;
-      font-size: 1.25rem;
-    }
-
-    .payment-price {
-      margin: 12px 0;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-
-    .payment-card p {
-      line-height: 1.7;
-    }
-
-    .payment-terms {
-      margin-top: 28px;
-      padding: 22px;
-      border-radius: 12px;
-      background: #e9e9df;
-      line-height: 1.8;
-    }
-
-    .payment-footer {
-      margin-top: 30px;
-      text-align: center;
-      line-height: 1.8;
-    }
-
-    .payment-footer a {
-      color: #303923;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    @media (max-width: 600px) {
-      .payment-page {
-        padding: 40px 18px;
-      }
-
-      .payment-card {
-        padding: 22px;
-      }
-    }
+    body { background: #f5f2e9; color: #20231f; }
+    .payment-page { padding: 60px 7%; }
+    .payment-container { max-width: 900px; margin: 0 auto; }
+    .payment-intro { text-align: center; margin-bottom: 35px; }
+    .payment-intro h1 { font-family: Georgia, serif; color: #30382d; }
+    .payment-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 35px 0; }
+    .payment-card { background: #fff; padding: 25px; border-radius: 8px; }
+    .payment-card h2 { font-family: Georgia, serif; font-size: 1.35rem; }
+    .payment-price { font-size: 1.7rem; font-weight: bold; color: #30382d; }
+    .payment-terms { background: #e9e8df; padding: 22px; border-radius: 8px; margin: 30px 0; }
+    .paypal-area { background: #fff; padding: 25px; border-radius: 8px; max-width: 600px; margin: 0 auto; }
+    .paypal-area h2 { text-align: center; font-family: Georgia, serif; }
+    .payment-footer { text-align: center; margin-top: 35px; }
+    .payment-footer a { color: #30382d; }
   </style>
 </head>
-
 <body>
   <main class="payment-page">
     <div class="payment-container">
-
       <header class="payment-intro">
-        <div class="eyebrow">BurnStrong Yoga</div>
         <h1>Private Yoga — 60 Minutes</h1>
-        <p>
-          Choose the private yoga session that works for you.
-          Each session is personalized to your needs, goals,
-          experience, and body.
-        </p>
+        <p>Choose the session that works best for you.</p>
       </header>
 
-      <section class="payment-card">
-        <h2>Private One-on-One Yoga</h2>
-        <div class="payment-price">$99</div>
-        <p>
-          Enjoy individualized yoga instruction focused on mindful
-          movement, mobility, strength, flexibility, and breathwork.
-        </p>
+      <section class="payment-options" aria-label="60-minute session options">
+        <article class="payment-card">
+          <h2>One-on-One Private Yoga</h2>
+          <p class="payment-price">$99</p>
+          <p>A personalized session focused on your movement, mobility, strength, flexibility, and breathwork.</p>
+        </article>
+        <article class="payment-card">
+          <h2>Couples Private Yoga</h2>
+          <p class="payment-price">$120</p>
+          <p>A private yoga session designed for two people.</p>
+        </article>
+        <article class="payment-card">
+          <h2>Small Group Private Yoga</h2>
+          <p class="payment-price">$155</p>
+          <p>A private session for a small group.</p>
+        </article>
       </section>
 
-      <section class="payment-card">
-        <h2>Couples Private Yoga</h2>
-        <div class="payment-price">$120</div>
-        <p>
-          A private 60-minute yoga session for two people,
-          with instruction adapted to both participants.
-        </p>
+      <section class="payment-terms">
+        <h2>Before You Pay</h2>
+        <ul>
+          <li>Each session is 60 minutes long.</li>
+          <li>All purchases must be used within 30 days of the purchase date.</li>
+          <li>Please arrange your session time in advance.</li>
+        </ul>
       </section>
 
-      <section class="payment-card">
-        <h2>Small Group Private Yoga</h2>
-        <div class="payment-price">$155</div>
-        <p>
-          A private 60-minute yoga session for your small group,
-          with movement and instruction tailored to the group's needs.
-        </p>
-      </section>
-
-      <section class="payment-card">
-        <h2>Choose Your Session & Pay</h2>
-        <p>
-          Select your preferred session and complete your payment
-          securely through PayPal.
-        </p>
-
-        <div id="paypal-container-GVP6W23HQPC3U"></div>
-
+      <section class="paypal-area">
+        <h2>Choose Your Session &amp; Pay</h2>
+        <div id="paypal-container-P6SSHDE2TXMKL"></div>
         <script>
           paypal.HostedButtons({
-            hostedButtonId: "GVP6W23HQPC3U",
-          }).render("#paypal-container-GVP6W23HQPC3U")
+            hostedButtonId: "P6SSHDE2TXMKL",
+          }).render("#paypal-container-P6SSHDE2TXMKL")
         </script>
       </section>
 
-      <div class="payment-terms">
-        <strong>Purchase terms</strong>
-        <ul>
-          <li>All sessions are 60 minutes long.</li>
-          <li>Purchases must be used within 30 days of purchase.</li>
-          <li>Please arrange your session in advance.</li>
-        </ul>
-      </div>
-
       <footer class="payment-footer">
-        <p>
-          Questions? <a href="https://burnstrongyoga.com/#contact">
-          Contact BurnStrong Yoga</a>.
-        </p>
-        <p>
-          <a href="https://burnstrongyoga.com/">BurnStrong Yoga</a>
-        </p>
+        <p><a href="index.html#contact">Contact BurnStrong Yoga</a></p>
+        <p><a href="index.html">Return to the main website</a></p>
       </footer>
-
     </div>
   </main>
 </body>
