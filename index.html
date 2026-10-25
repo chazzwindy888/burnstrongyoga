@@ -316,7 +316,120 @@
         gap: 25px;
       }
     }
-  </style>
+
+    /* Contact inquiry form */
+    .contact > p {
+      max-width: 650px;
+      margin: 0 auto 36px;
+      line-height: 1.8;
+    }
+
+    .contact-form {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 36px;
+      background: var(--white);
+      border: 1px solid rgba(48, 56, 45, 0.12);
+      border-radius: 12px;
+      text-align: left;
+      box-shadow: 0 8px 28px rgba(32, 35, 31, 0.06);
+    }
+
+    .contact-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .contact-form label {
+      display: block;
+      margin: 18px 0 8px;
+      color: var(--deep-olive);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .contact-form-row label {
+      margin-top: 0;
+    }
+
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #c9cbbf;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--charcoal);
+      font: inherit;
+    }
+
+    .contact-form textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      outline: 2px solid var(--olive);
+      outline-offset: 2px;
+      border-color: var(--olive);
+    }
+
+    .contact-form .contact-submit {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 14px 28px;
+      border: 1px solid var(--deep-olive);
+      border-radius: 6px;
+      background: var(--deep-olive);
+      color: var(--white);
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .contact-form .contact-submit:hover {
+      background: var(--olive);
+      border-color: var(--olive);
+    }
+
+    .contact-form .contact-privacy {
+      margin: 16px 0 0;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #5e6258;
+    }
+
+    .contact-spam-trap {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 600px) {
+      .contact-form {
+        padding: 24px 18px;
+      }
+
+      .contact-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .contact-form .contact-submit {
+        width: 100%;
+      }
+    }
+
+</style>
 
   <style>
     /* Keep Charlie's portrait small and circular beside the biography. */
@@ -559,9 +672,60 @@
       <div class="eyebrow">Get in touch</div>
       <h2>Have a question?</h2>
       <p>
-        Contact information and the booking request form will be added
-        in the next development stage.
+        Interested in corporate wellness, private yoga, workshops, or something else?
+        Send me a message and tell me what you have in mind.
       </p>
+
+      <form class="contact-form"
+            action="https://script.google.com/macros/s/AKfycbx28TaLkzr9Rp8RVwUTJj84qDKWOXLxCwKwM-cHoDatpCJw0LAifbxAITFIXjblBCBmaA/exec"
+            method="post">
+        <input type="hidden" name="formType" value="contact">
+
+        <div class="contact-spam-trap" aria-hidden="true">
+          <label for="contact-website">Leave this field empty</label>
+          <input id="contact-website" type="text" name="website"
+                 tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="contact-form-row">
+          <div>
+            <label for="contact-name">Your name *</label>
+            <input id="contact-name" name="name" type="text"
+                   autocomplete="name" maxlength="150" required>
+          </div>
+          <div>
+            <label for="contact-email">Your email *</label>
+            <input id="contact-email" name="email" type="email"
+                   autocomplete="email" maxlength="254" required>
+          </div>
+        </div>
+
+        <label for="contact-interest">What are you interested in? *</label>
+        <select id="contact-interest" name="interest" required>
+          <option value="" selected disabled>Select an inquiry type</option>
+          <option value="Corporate wellness">Corporate wellness</option>
+          <option value="Private yoga sessions">Private yoga sessions</option>
+          <option value="Group classes">Group classes</option>
+          <option value="Workshops and special events">Workshops and special events</option>
+          <option value="Accessible or adaptive yoga">Accessible or adaptive yoga</option>
+          <option value="Something else">Something else</option>
+        </select>
+
+        <label for="contact-organization">Company or organization (optional)</label>
+        <input id="contact-organization" name="organization" type="text"
+               autocomplete="organization" maxlength="200">
+
+        <label for="contact-message">How can I help? *</label>
+        <textarea id="contact-message" name="message" rows="6"
+                  maxlength="3000"
+                  placeholder="Tell me a little about what you're looking for..."
+                  required></textarea>
+
+        <button class="contact-submit" type="submit">Send inquiry</button>
+        <p class="contact-privacy">
+          Your message will be sent to BurnStrong Yoga so I can respond to your inquiry.
+        </p>
+      </form>
     </section>
 
   </main>
