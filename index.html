@@ -429,6 +429,57 @@
       }
     }
 
+
+    /* San Juan resident introductory offer */
+    .san-juan-offer {
+      background: var(--ivory);
+      text-align: center;
+    }
+
+    .san-juan-offer h2 {
+      margin-bottom: 20px;
+    }
+
+    .san-juan-intro {
+      max-width: 650px;
+      margin: 0 auto 28px;
+      line-height: 1.8;
+    }
+
+    .san-juan-details {
+      max-width: 520px;
+      margin: 0 auto 24px;
+      text-align: left;
+      line-height: 1.8;
+    }
+
+    .san-juan-details ul {
+      padding-left: 24px;
+    }
+
+    .san-juan-note {
+      max-width: 620px;
+      margin: 0 auto 24px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .san-juan-payment {
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .san-juan-contact {
+      margin-top: 24px;
+      font-size: 0.95rem;
+    }
+
+    .san-juan-contact a {
+      color: var(--deep-olive);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
 </style>
 
   <style>
@@ -461,6 +512,9 @@
     }
   </style>
 
+<script
+  src="https://www.paypal.com/sdk/js?client-id=BAAQ4sc6DQMMuw8H0Zql_lULDuNxmOuVxg4ReEukklJC1MvFa5WyKWXDVEIcGILOVbgCWvS4hBMEIkKtr0&components=hosted-buttons&enable-funding=venmo&currency=USD">
+</script>
 </head>
 
 <body>
@@ -729,6 +783,37 @@
     </section>
 
   </main>
+
+    <section class="section san-juan-offer" id="san-juan-special">
+      <div class="eyebrow">A special welcome for San Juan residents</div>
+      <h2>3 Yoga Classes for $149</h2>
+      <p class="san-juan-intro">
+        New to BurnStrong Yoga? Enjoy three classes at a special introductory
+        rate reserved for local San Juan residents.
+      </p>
+      <div class="san-juan-details">
+        <p><strong>Who qualifies?</strong></p>
+        <ul>
+          <li>First-time BurnStrong Yoga clients.</li>
+          <li>Must permanently reside in San Juan, Puerto Rico.</li>
+          <li>Proof of a permanent San Juan residential address is required.</li>
+        </ul>
+      </div>
+      <p class="san-juan-note">
+        Please confirm that you meet the residency requirements before purchasing.
+      </p>
+      <div class="san-juan-payment">
+        <div id="paypal-container-69WJR9AZRV3DJ"></div>
+        <script>
+          paypal.HostedButtons({
+            hostedButtonId: "69WJR9AZRV3DJ",
+          }).render("#paypal-container-69WJR9AZRV3DJ")
+        </script>
+      </div>
+      <p class="san-juan-contact">
+        Questions about eligibility? <a href="#contact">Contact BurnStrong Yoga</a>.
+      </p>
+    </section>
 
   <footer>
     BurnStrong Yoga · Private wellness in Puerto Rico and online
